@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'octofit_tracker',
     'rest_framework',
-    'djongo',
     'corsheaders',
 ]
 
@@ -74,23 +73,15 @@ TEMPLATES = [
 WSGI_APPLICATION = 'octofit_tracker.wsgi.application'
 
 
-# Database
-# Djongo + MongoDB
-DATABASES = {
-    'default': {
-        'ENGINE': 'djongo',
-        'NAME': 'octofit_db',
-        'ENFORCE_SCHEMA': False,
-        'CLIENT': {
-            'host': 'localhost',
-            'port': 27017,
-            'username': '',
-            'password': '',
-            'authSource': 'admin',
-            'authMechanism': 'SCRAM-SHA-1',
-        },
-    }
-}
+# Database: MongoEngine (MongoDB)
+DATABASES = {}
+MONGODB_NAME = 'octofit_db'
+MONGODB_HOST = 'localhost'
+MONGODB_PORT = 27017
+
+# MongoEngine connect on startup
+from mongoengine import connect
+connect(db=MONGODB_NAME, host=MONGODB_HOST, port=MONGODB_PORT)
 
 # CORS settings
 CORS_ALLOW_ALL_ORIGINS = True

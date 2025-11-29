@@ -1,27 +1,30 @@
 from rest_framework import serializers
-from .models import User, Team, Activity, Workout, Leaderboard
+from .mongo_models import User, Team, Activity, Workout, Leaderboard
 
-class TeamSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Team
-        fields = '__all__'
+class TeamSerializer(serializers.Serializer):
+    id = serializers.CharField(read_only=True)
+    name = serializers.CharField(max_length=100)
 
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = '__all__'
+class UserSerializer(serializers.Serializer):
+    id = serializers.CharField(read_only=True)
+    name = serializers.CharField(max_length=100)
+    email = serializers.EmailField()
+    team = serializers.CharField()
 
-class ActivitySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Activity
-        fields = '__all__'
+class ActivitySerializer(serializers.Serializer):
+    id = serializers.CharField(read_only=True)
+    user = serializers.CharField()
+    type = serializers.CharField(max_length=100)
+    duration = serializers.IntegerField()
+    date = serializers.DateField()
 
-class WorkoutSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Workout
-        fields = '__all__'
+class WorkoutSerializer(serializers.Serializer):
+    id = serializers.CharField(read_only=True)
+    name = serializers.CharField(max_length=100)
+    description = serializers.CharField()
+    difficulty = serializers.CharField(max_length=50)
 
-class LeaderboardSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Leaderboard
-        fields = '__all__'
+class LeaderboardSerializer(serializers.Serializer):
+    id = serializers.CharField(read_only=True)
+    user = serializers.CharField()
+    score = serializers.IntegerField()
